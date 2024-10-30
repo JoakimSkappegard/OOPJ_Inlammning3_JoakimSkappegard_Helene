@@ -1,6 +1,10 @@
 Joakim ArbRum2
 ____________________________________________________________________________
+gör metod som genererar objekt(brickor) med rätt koordinater/dispalay values
 
+gör metod som slumpar ut placering av brickor
+
+gör metod som flyttar bricka
 
 
 
