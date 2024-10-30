@@ -7,3 +7,6 @@ ____________________________________________________________________________
 Helene
 ____________________________________________________________________________
 //gör en frame med options knappar och en gridlayout för spelet
+//gör icon arrayer för att applicera på knapparna
+//random funktion som placerar ut knapparna på slumpade platser
+//funktion som kollar efter vinst (booleans? jämföra arrayer?)
