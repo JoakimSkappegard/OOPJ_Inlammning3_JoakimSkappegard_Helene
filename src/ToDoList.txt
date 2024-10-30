@@ -1,10 +1,10 @@
-Joakim
+Joakim ArbRum2
 ____________________________________________________________________________
 
 
 
 
-Helene
+Helene ArbRum1
 ____________________________________________________________________________
 //gör en frame med options knappar och en gridlayout för spelet
 //gör icon arrayer för att applicera på knapparna
