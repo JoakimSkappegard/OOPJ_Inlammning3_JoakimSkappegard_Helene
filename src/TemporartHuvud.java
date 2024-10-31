@@ -3,9 +3,9 @@ import java.util.*;
 public class TemporartHuvud {
 
     TemporartHuvud(int brikstorlek) {
-        Spelplan spelplanLayout = new Spelplan(4);
+        Spelplan spelplanLayout = new Spelplan(brikstorlek);
 
-        Bricka.createBrickor(4,spelplanLayout.getSpelplanLayout(),spelplanLayout);
+        Bricka.createBrickor(brikstorlek,spelplanLayout.getSpelplanLayout(),spelplanLayout);
 
         spelplanLayout.ritaSpelplan();
 
