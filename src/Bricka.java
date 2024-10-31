@@ -2,14 +2,12 @@ import java.util.*;
 
 public class Bricka {
 
-    private static
-
-    int desierdLocationX;
-    int desierdLocationY;
+    private int desierdLocationX;
+    private int desierdLocationY;
 
 
-    int currentLocationX;
-    int currentLocationY;
+    private int currentLocationX;
+    private int currentLocationY;
 
     String desplayedText;
 
