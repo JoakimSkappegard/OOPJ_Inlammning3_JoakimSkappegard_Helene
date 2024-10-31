@@ -79,8 +79,20 @@ public class GameWindow implements ActionListener {
         JButton button=(JButton) e.getSource();
         int buttonX=buttonX(button);
         int buttonY=buttonY(button);
-        button.setLocation(blankX, blankY);
-        game_buttons[15].setLocation(buttonX,buttonY);
+
+
+        //System.out.println(buttonX+" "+buttonY+" "+blankX+" "+blankY);
+        //System.out.println(game_buttons[15].getSize().width);
+        //System.out.println(buttonX/game_buttons[15].getSize().width);
+
+
+        if(arbrevidtom(button)){
+
+            button.setLocation(blankX, blankY);
+            game_buttons[15].setLocation(buttonX,buttonY);
+
+        }
+
 
     }
 
@@ -100,6 +112,20 @@ public class GameWindow implements ActionListener {
     public int buttonX (JButton b){
         int currentX=b.getX();
         return currentX;
+    }
+
+    public int geXKoordinatKnapp(JButton button){
+        int xKordinat = (button.getX()/button.getSize().width);
+        return xKordinat;
+    }
+
+    public int geYKoordinatKnapp(JButton button){
+        int yKordinat = (button.getY()/button.getSize().height);
+        return yKordinat;
+    }
+
+    public boolean arbrevidtom(JButton button){
+        return ((geXKoordinatKnapp(button)==geXKoordinatKnapp(game_buttons[15]))&& (geYKoordinatKnapp(button)==(geYKoordinatKnapp(game_buttons[15])-1)||geYKoordinatKnapp(button)==(geYKoordinatKnapp(game_buttons[15])+1))) || (geYKoordinatKnapp(button)==(geYKoordinatKnapp(game_buttons[15])) && (geXKoordinatKnapp(button)==(geXKoordinatKnapp(game_buttons[15])-1)||geXKoordinatKnapp(button)==geXKoordinatKnapp(game_buttons[15])+1));
     }
 
 
