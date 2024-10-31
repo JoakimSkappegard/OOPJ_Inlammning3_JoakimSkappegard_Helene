@@ -12,6 +12,7 @@ public class GameWindow implements ActionListener {
     JButton[] game_buttons=new JButton[16];
     JButton[] option_buttons=new JButton[3];
 
+
     GameWindow() {
         int windowBounds=800;
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,8 +38,10 @@ public class GameWindow implements ActionListener {
         option_buttons[1].setText("Option 2");
         option_buttons[2].setText("Option 3");
 
+
         panel_buttons.setLayout(new GridLayout(4, 4));
         panel_buttons.setBackground(new Color(150, 150, 150));
+
 
 
         for (int i = 0; i < game_buttons.length; i++) {
@@ -53,6 +56,8 @@ public class GameWindow implements ActionListener {
             game_buttons[i].addActionListener(this);
         }
 
+
+
         //lägger på options texten och knapparna på panel_options
         panel_options.add(label_textfield);
         for (JButton optionButton : option_buttons) {
@@ -65,10 +70,38 @@ public class GameWindow implements ActionListener {
 
     }
 
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        int blankX=blankX(game_buttons[15]);
+        int blankY=blankY(game_buttons[15]);
+        JButton button=(JButton) e.getSource();
+        int buttonX=buttonX(button);
+        int buttonY=buttonY(button);
+        button.setLocation(blankX, blankY);
+        game_buttons[15].setLocation(buttonX,buttonY);
 
     }
+
+    public int blankY (JButton b){
+        int currentY=b.getY();
+        return currentY;
+    }
+    public int blankX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
+    public int buttonY (JButton b){
+        int currentY=b.getY();
+        return currentY;
+    }
+    public int buttonX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
 
     public static void main(String[] args) {
         GameWindow window=new GameWindow();
