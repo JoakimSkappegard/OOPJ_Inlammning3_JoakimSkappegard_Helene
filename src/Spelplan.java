@@ -2,7 +2,16 @@ public class Spelplan {
 
     private Bricka[][] spelplanLayout;
 
-    public void setSpelplanLayout(Bricka bricka,int i,int j) {
+
+
+    /*
+    public String test1(String){
+
+    }
+
+     */
+
+    public void setSpelplanLayout(Bricka bricka, int i, int j) {
         this.spelplanLayout[i][j] = bricka;
     }
 
@@ -19,6 +28,10 @@ public class Spelplan {
 
     public Bricka[][] getSpelplanLayout() {
         return this.spelplanLayout;
+    }
+
+    public Bricka getBrickaFromSpelplan(int i, int j) {
+        return this.spelplanLayout[i][j];
     }
 
     Spelplan(int strolek){

@@ -13,6 +13,18 @@ public class GameWindow implements ActionListener {
     JButton[] option_buttons=new JButton[3];
 
     GameWindow() {
+        int brikstorlek = 4;
+
+        Spelplan spelplanLayout = new Spelplan(brikstorlek);
+
+        Bricka.createBrickor(brikstorlek,spelplanLayout.getSpelplanLayout(),spelplanLayout);
+
+        //spelplanLayout.ritaSpelplan();
+
+
+
+
+
         int windowBounds=800;
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(windowBounds, windowBounds);
@@ -52,6 +64,15 @@ public class GameWindow implements ActionListener {
             game_buttons[i].setFont(new Font("Times New Roman", Font.BOLD, 120));
             game_buttons[i].addActionListener(this);
         }
+
+
+        spelplanLayout.getBrickaFromSpelplan(0,0).setDesplayedText("Jag är ett objekt av typ Bricka");
+
+
+        game_buttons[0].setText(spelplanLayout.getBrickaFromSpelplan(0,0).toString());
+
+
+
 
         //lägger på options texten och knapparna på panel_options
         panel_options.add(label_textfield);

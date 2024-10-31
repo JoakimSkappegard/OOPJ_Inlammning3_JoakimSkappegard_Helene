@@ -13,6 +13,8 @@ public class Bricka {
 
     String desplayedText;
 
+    boolean isBlank = false;
+
     //bild
 
     public static void createBrickor(int rotenUrAntal, Bricka[][] spelplan,Spelplan instanceSpelplan) {
