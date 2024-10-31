@@ -86,7 +86,7 @@ public class GameWindow implements ActionListener {
         //System.out.println(buttonX/game_buttons[15].getSize().width);
 
 
-        if(arbrevidtom(button)){
+        if(arbrevidtom(button)){        //kan kanske påverkas av layoten? räknar den pixlar från fönstret eller från panel
 
             button.setLocation(blankX, blankY);
             game_buttons[15].setLocation(buttonX,buttonY);
