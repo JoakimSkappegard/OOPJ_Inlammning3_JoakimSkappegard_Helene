@@ -162,7 +162,7 @@ public class GameWindow implements ActionListener {
                     System.out.println(j);                          //ok
                     System.out.println(getPixelKordinatsFromX(j)+"y kord");
 
-                    game_buttons[denUtvalda].setLocation(getPixelKordinatsFromX(i), getPixelKordinatsFromY(j));
+                    knappar.get(denUtvalda).setLocation(getPixelKordinatsFromX(i), getPixelKordinatsFromY(j));
 
                     knappar.remove(denUtvalda);
                 }
