@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class GameWindow implements ActionListener {
 
@@ -11,6 +14,8 @@ public class GameWindow implements ActionListener {
     JLabel label_textfield=new JLabel();
     JButton[] game_buttons=new JButton[16];
     JButton[] option_buttons=new JButton[3];
+    private Path p1 = Paths.get("src/bilder/hamster/");
+
 
     GameWindow() {
         int windowBounds=800;
@@ -37,8 +42,24 @@ public class GameWindow implements ActionListener {
         option_buttons[1].setText("Option 2");
         option_buttons[2].setText("Option 3");
 
+
         panel_buttons.setLayout(new GridLayout(4, 4));
         panel_buttons.setBackground(new Color(150, 150, 150));
+        //
+
+        Icon[] bilder = new ImageIcon[15];
+        for (int i = 0; i < bilder.length; i++) {
+            String imagePath = "src/bilder/hamster/" + (i + 1) + ".png";
+            try {
+                Icon originalIcon = new ImageIcon(imagePath);
+                bilder[i] = originalIcon;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+
+        //
 
 
         for (int i = 0; i < game_buttons.length; i++) {
@@ -46,12 +67,15 @@ public class GameWindow implements ActionListener {
             panel_buttons.add(game_buttons[i]);
             //bestämmer att alla knappar förutom den sista ska få en siffra
             if (i!=game_buttons.length-1) {
-                game_buttons[i].setText(String.valueOf(i+1));
+                game_buttons[i].setIcon(bilder[i]);
+                // game_buttons[i].setText(String.valueOf(i+1));
             }
             game_buttons[i].setFocusable(false);
             game_buttons[i].setFont(new Font("Times New Roman", Font.BOLD, 120));
             game_buttons[i].addActionListener(this);
         }
+
+
 
         //lägger på options texten och knapparna på panel_options
         panel_options.add(label_textfield);
@@ -65,10 +89,39 @@ public class GameWindow implements ActionListener {
 
     }
 
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        int blankX=blankX(game_buttons[15]);
+        int blankY=blankY(game_buttons[15]);
+        JButton button=(JButton) e.getSource();
+        int buttonX=buttonX(button);
+        int buttonY=buttonY(button);
+        button.setLocation(blankX, blankY);
+        game_buttons[15].setLocation(buttonX,buttonY);
 
     }
+
+    public int blankY (JButton b){
+        float currentY= b.getAlignmentY();
+
+        return (int) currentY;
+    }
+    public int blankX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
+    public int buttonY (JButton b){
+        int currentY=b.getY();
+        return currentY;
+    }
+    public int buttonX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
 
     public static void main(String[] args) {
         GameWindow window=new GameWindow();
