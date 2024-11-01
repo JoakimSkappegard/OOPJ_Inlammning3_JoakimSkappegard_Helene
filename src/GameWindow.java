@@ -111,6 +111,10 @@ public class GameWindow implements ActionListener {
 
                 button.setLocation(blankX, blankY);
                 game_buttons[15].setLocation(buttonX, buttonY);
+                for (int i = 0; i < game_buttons.length; i++) {
+
+
+                }
             }
         }
     }
