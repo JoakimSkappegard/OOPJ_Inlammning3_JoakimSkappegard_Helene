@@ -11,7 +11,7 @@ public class GameWindow implements ActionListener {
     JPanel panel_buttons=new JPanel();
     JLabel label_textfield=new JLabel();
     JButton[] game_buttons=new JButton[16];
-    JButton[] option_buttons=new JButton[3];
+    JButton[] option_buttons=new JButton[4];
     Point[] originalPoint=new Point[game_buttons.length];
 
     GameWindow() {
@@ -29,15 +29,18 @@ public class GameWindow implements ActionListener {
         label_textfield.setHorizontalAlignment(JLabel.LEFT);
         label_textfield.setText("Options: ");
         label_textfield.setOpaque(true);
+        //fixar till option paneln med knapparna högst upp
         panel_options.setLayout(new FlowLayout(FlowLayout.LEFT));
-        for (int i = 0; i < option_buttons.length; i++) {
+        panel_options.add(label_textfield);
+        for (int i=0;i<option_buttons.length;i++) {
             option_buttons[i]=new JButton();
-            option_buttons[i].setSize(25,15);
+            panel_options.add(option_buttons[i]);
             option_buttons[i].addActionListener(this);
         }
-        option_buttons[0].setText("Option 1");
-        option_buttons[1].setText("Option 2");
-        option_buttons[2].setText("Option 3");
+        option_buttons[0].setText("Nytt spel");
+        option_buttons[1].setText("Siffror");
+        option_buttons[2].setText("Hamster");
+        option_buttons[3].setText("Groda");
 
 
         panel_buttons.setLayout(new GridLayout(4, 4));
@@ -76,10 +79,8 @@ public class GameWindow implements ActionListener {
 
 
         //lägger på options texten och knapparna på panel_options
-        panel_options.add(label_textfield);
-        for (JButton optionButton : option_buttons) {
-            panel_options.add(optionButton);
-        }
+
+        //panel_options.add(option_buttons[0]);
 
         frame.add(panel_options, BorderLayout.NORTH);
         frame.add(panel_buttons);
@@ -104,7 +105,7 @@ public class GameWindow implements ActionListener {
         int blankX = blankX(game_buttons[15]);
         int blankY = blankY(game_buttons[15]);
         JButton button = (JButton) e.getSource();
-        if(button.getText().equals("Option 1")) {
+        if(button.getText().equals("Nytt spel")) {
             genereraNyttSpel(4);
 
         }
