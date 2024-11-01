@@ -2,9 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class GameWindow implements ActionListener {
@@ -15,7 +12,7 @@ public class GameWindow implements ActionListener {
     JLabel label_textfield=new JLabel();
     JButton[] game_buttons=new JButton[16];
     JButton[] option_buttons=new JButton[3];
-
+    Point[] originalPoint=new Point[game_buttons.length];
 
     GameWindow() {
         int windowBounds=800;
@@ -48,7 +45,7 @@ public class GameWindow implements ActionListener {
         //
 
 
-        /*
+
         Icon[] bilder = new ImageIcon[15];
         for (int i = 0; i < bilder.length; i++) {
             String imagePath = "src/bilder/hamster/" + (i + 1) + ".png";
@@ -59,11 +56,9 @@ public class GameWindow implements ActionListener {
                 System.out.println(e.getMessage());
             }
         }
-        */
+
 
         //
-        String[] buttonNames = new String[game_buttons.length];
-/*
 
         for (int i = 0; i < game_buttons.length; i++) {
             game_buttons[i] = new JButton();
@@ -71,16 +66,12 @@ public class GameWindow implements ActionListener {
             //bestämmer att alla knappar förutom den sista ska få en siffra
             if (i!=game_buttons.length-1 && bilder[i] != null) {
                 game_buttons[i].setIcon(bilder[i]);
-                // game_buttons[i].setText(String.valueOf(i+1));
             }
             game_buttons[i].setName(String.valueOf(i+1));
             game_buttons[i].setFocusable(false);
             game_buttons[i].setFont(new Font("Times New Roman", Font.BOLD, 120));
             game_buttons[i].addActionListener(this);
-
         }
-
- */
 
 
 
@@ -96,6 +87,11 @@ public class GameWindow implements ActionListener {
         panel_buttons.repaint();
         frame.revalidate();
         frame.repaint();
+        Point[] originalPoint=new Point[game_buttons.length];
+        for (int i = 0; i < originalPoint.length; i++) {
+            originalPoint[i]=game_buttons[i].getLocation();
+        }
+        this.originalPoint=originalPoint;
 
 
 
@@ -110,6 +106,7 @@ public class GameWindow implements ActionListener {
         JButton button = (JButton) e.getSource();
         if(button.getText().equals("Option 1")) {
             genereraNyttSpel(4);
+
         }
         else{
             int buttonX = buttonX(button);
@@ -118,6 +115,13 @@ public class GameWindow implements ActionListener {
 
                 button.setLocation(blankX, blankY);
                 game_buttons[15].setLocation(buttonX, buttonY);
+                Boolean winChecked=winChecker(originalPoint);
+                if (winChecked){
+                    System.out.println("grattis");
+                }
+                else{
+                    System.out.println("inte än");
+                }
             }
         }
     }
@@ -156,79 +160,40 @@ public class GameWindow implements ActionListener {
             knappar.add(game_buttons[i]);
 
         }
-
-
         for (int i = 0; i < spelstorlek; i++) {
             for (int j = 0; j < spelstorlek; j++) {
-
-
 
                 if(!knappar.isEmpty()) {
 
                     int denUtvalda = slumpGen.nextInt(knappar.size());
-
-
-                    System.out.println(knappar.size());     //grön
-                    System.out.println(denUtvalda);         //grön
-                    System.out.println(game_buttons[0].getSize().width+"bred"); //??
-                    System.out.println(game_buttons[0].getSize().height+"höjd");
-                    System.out.println(i);                          //ok
-                    System.out.println(getPixelKordinatsFromX(i)+"x kord");
-                    System.out.println(j);                          //ok
-                    System.out.println(getPixelKordinatsFromX(j)+"y kord");
-
                     knappar.get(denUtvalda).setLocation(getPixelKordinatsFromX(i), getPixelKordinatsFromY(j));
-
                     knappar.remove(denUtvalda);
                 }
             }
         }
+
     }
 
     public int getPixelKordinatsFromX(int x){
         return game_buttons[15].getSize().width*x;
     }
-        int blankX=blankX(game_buttons[15]);
-        int blankY=blankY(game_buttons[15]);
-        JButton button=(JButton) e.getSource();
-        int buttonX=buttonX(button);
-        int buttonY=buttonY(button);
-        button.setLocation(blankX, blankY);
-        game_buttons[15].setLocation(buttonX,buttonY);
-    }
 
-    public boolean winChecker(){
+
+    public boolean winChecker(Point[] original){
+
         for(int i=0;i<game_buttons.length;i++){
-            String buttonName = game_buttons[i].getName();
-
-            if (!buttonName.equals(String.valueOf(i + 1))) {
+            if(!game_buttons[i].getLocation().equals(original[i])){
                 return false;
             }
+                //System.out.println("game button current: "+game_buttons[i].getLocation());
+                //System.out.println("game button original: "+originalPoint[i]);
         }
-        return true;
+        return true;}
+
     public int getPixelKordinatsFromY(int y){
         return game_buttons[15].getSize().height*y;
     }
 
-
-    public int blankY (JButton b){
-        float currentY= b.getAlignmentY();
-
-        return (int) currentY;
-    }
-    public int blankX (JButton b){
-        int currentX=b.getX();
-        return currentX;
-    }
-
-    public int buttonY (JButton b){
-        int currentY=b.getY();
-        return currentY;
-    }
-    public int buttonX (JButton b){
-        int currentX=b.getX();
-        return currentX;
-    }
 
 
     public int geXKoordinatKnapp(JButton button){
