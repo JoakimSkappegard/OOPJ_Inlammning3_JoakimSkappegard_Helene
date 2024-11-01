@@ -70,26 +70,6 @@ public class GameWindow implements ActionListener {
         frame.add(panel_options, BorderLayout.NORTH);
         frame.add(panel_buttons);
 
-        /*
-        genereraNyttSpel(4);
-        frame.revalidate();
-        frame.repaint();
-
-         */
-
-        /*
-
-
-        int blankX = blankX(game_buttons[15]);
-        int blankY = blankY(game_buttons[15]);
-        int buttonX = buttonX(game_buttons[0]);
-        int buttonY = buttonY(game_buttons[0]);
-        game_buttons[0].setLocation(blankX, blankY);
-        game_buttons[15].setLocation(buttonX,buttonY);
-
-         */
-
-
 
 
     }
