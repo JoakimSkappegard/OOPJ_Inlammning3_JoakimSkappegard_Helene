@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 public class GameWindow implements ActionListener {
 
@@ -63,12 +64,114 @@ public class GameWindow implements ActionListener {
         frame.add(panel_options, BorderLayout.NORTH);
         frame.add(panel_buttons);
 
+        //genereraNyttSpel(4);
+
+        /*
+
+
+        int blankX = blankX(game_buttons[15]);
+        int blankY = blankY(game_buttons[15]);
+        int buttonX = buttonX(game_buttons[0]);
+        int buttonY = buttonY(game_buttons[0]);
+        game_buttons[0].setLocation(blankX, blankY);
+        game_buttons[15].setLocation(buttonX,buttonY);
+
+         */
+
+
+
+
     }
+
+    /*
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int blankX = blankX(game_buttons[15]);
+        int blankY = blankY(game_buttons[15]);
+        JButton button = (JButton) e.getSource();
+        int buttonX = buttonX(button);
+        int buttonY = buttonY(button);
+        button.setLocation(blankX, blankY);
+        game_buttons[15].setLocation(buttonX,buttonY);
+    }
+
+     */
+
+    public int buttonY (JButton b){
+        int currentY=b.getY();
+        return currentY;
+    }
+    public int buttonX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
+    public int blankY (JButton b){
+        int currentY=b.getY();
+        return currentY;
+    }
+    public int blankX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
+    public JButton getGame_button(int i) {
+        return game_buttons[i];
+    }
+
+    public void genereraNyttSpel(int spelstorlek){
+
+        Random slumpGen = new Random();
+
+        ArrayList<JButton> knappar= new ArrayList();
+        for (int i = 0; i < (spelstorlek*spelstorlek); i++) {
+
+            knappar.add(game_buttons[i]);
+
+        }
+
+
+        for (int i = 0; i < spelstorlek; i++) {
+            for (int j = 0; j < spelstorlek; j++) {
+
+
+
+                if(!knappar.isEmpty()) {
+
+                    int denUtvalda = slumpGen.nextInt(knappar.size());
+                    System.out.println(knappar.size());     //grön
+                    System.out.println(denUtvalda);         //grön
+
+                    System.out.println(getPixelKordinatsFromX(i));  // alltid 0
+                    System.out.println(game_buttons[15].getSize().width);
+                    System.out.println(i);                          //ok
+                    System.out.println(j);                          //ok
+
+                    game_buttons[denUtvalda].setLocation(getPixelKordinatsFromX(i), getPixelKordinatsFromY(j));
+                    knappar.remove(denUtvalda);
+                }
+            }
+        }
+    }
+
+    public int getPixelKordinatsFromX(int x){
+        return game_buttons[15].getSize().width*x;
+    }
+
+    public int getPixelKordinatsFromY(int y){
+        return game_buttons[15].getSize().width*y;
+    }
+
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
+
+
 
     public static void main(String[] args) {
         GameWindow window=new GameWindow();
