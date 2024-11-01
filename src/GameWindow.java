@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 public class GameWindow implements ActionListener {
 
@@ -32,6 +33,7 @@ public class GameWindow implements ActionListener {
         for (int i = 0; i < option_buttons.length; i++) {
             option_buttons[i]=new JButton();
             option_buttons[i].setSize(25,15);
+            option_buttons[i].addActionListener(this);
         }
         option_buttons[0].setText("Option 1");
         option_buttons[1].setText("Option 2");
@@ -63,12 +65,130 @@ public class GameWindow implements ActionListener {
         frame.add(panel_options, BorderLayout.NORTH);
         frame.add(panel_buttons);
 
+        /*
+        genereraNyttSpel(4);
+        frame.revalidate();
+        frame.repaint();
+
+         */
+
+        /*
+
+
+        int blankX = blankX(game_buttons[15]);
+        int blankY = blankY(game_buttons[15]);
+        int buttonX = buttonX(game_buttons[0]);
+        int buttonY = buttonY(game_buttons[0]);
+        game_buttons[0].setLocation(blankX, blankY);
+        game_buttons[15].setLocation(buttonX,buttonY);
+
+         */
+
+
+
+
     }
 
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int blankX = blankX(game_buttons[15]);
+        int blankY = blankY(game_buttons[15]);
+        JButton button = (JButton) e.getSource();
+        if(button.getText().equals("Option 1")) {
+            genereraNyttSpel(4);
+        }
+        else{
+            int buttonX = buttonX(button);
+            int buttonY = buttonY(button);
+            button.setLocation(blankX, blankY);
+            game_buttons[15].setLocation(buttonX,buttonY);
+        }
+    }
+
+
+
+    public int buttonY (JButton b){
+        int currentY=b.getY();
+        return currentY;
+    }
+    public int buttonX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
+    public int blankY (JButton b){
+        int currentY=b.getY();
+        return currentY;
+    }
+    public int blankX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
+    public JButton getGame_button(int i) {
+        return game_buttons[i];
+    }
+
+    public void genereraNyttSpel(int spelstorlek){
+
+        Random slumpGen = new Random();
+
+        ArrayList<JButton> knappar= new ArrayList();
+        for (int i = 0; i < (spelstorlek*spelstorlek); i++) {
+
+            knappar.add(game_buttons[i]);
+
+        }
+
+
+        for (int i = 0; i < spelstorlek; i++) {
+            for (int j = 0; j < spelstorlek; j++) {
+
+
+
+                if(!knappar.isEmpty()) {
+
+                    int denUtvalda = slumpGen.nextInt(knappar.size());
+
+
+                    System.out.println(knappar.size());     //grön
+                    System.out.println(denUtvalda);         //grön
+                    System.out.println(game_buttons[0].getSize().width+"bred"); //??
+                    System.out.println(game_buttons[0].getSize().height+"höjd");
+                    System.out.println(i);                          //ok
+                    System.out.println(getPixelKordinatsFromX(i)+"x kord");
+                    System.out.println(j);                          //ok
+                    System.out.println(getPixelKordinatsFromX(j)+"y kord");
+
+                    knappar.get(denUtvalda).setLocation(getPixelKordinatsFromX(i), getPixelKordinatsFromY(j));
+
+                    knappar.remove(denUtvalda);
+                }
+            }
+        }
+    }
+
+    public int getPixelKordinatsFromX(int x){
+        return game_buttons[15].getSize().width*x;
+    }
+
+    public int getPixelKordinatsFromY(int y){
+        return game_buttons[15].getSize().height*y;
+    }
+
+
+
+    /*
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
+
+     */
+
+
 
     public static void main(String[] args) {
         GameWindow window=new GameWindow();
