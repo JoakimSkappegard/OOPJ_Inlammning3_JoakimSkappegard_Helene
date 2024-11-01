@@ -13,6 +13,7 @@ public class GameWindow implements ActionListener {
     JButton[] game_buttons=new JButton[16];
     JButton[] option_buttons=new JButton[4];
     Point[] originalPoint=new Point[game_buttons.length];
+    private Icon[] bilder=new Icon[game_buttons.length-1];
 
     GameWindow() {
         int windowBounds=800;
@@ -29,6 +30,7 @@ public class GameWindow implements ActionListener {
         label_textfield.setHorizontalAlignment(JLabel.LEFT);
         label_textfield.setText("Options: ");
         label_textfield.setOpaque(true);
+
         //fixar till option paneln med knapparna högst upp
         panel_options.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel_options.add(label_textfield);
@@ -45,42 +47,20 @@ public class GameWindow implements ActionListener {
 
         panel_buttons.setLayout(new GridLayout(4, 4));
         panel_buttons.setBackground(new Color(150, 150, 150));
-        //
-
-
-
-        Icon[] bilder = new ImageIcon[15];
-        for (int i = 0; i < bilder.length; i++) {
-            String imagePath = "src/bilder/hamster/" + (i + 1) + ".png";
-            try {
-                Icon originalIcon = new ImageIcon(imagePath);
-                bilder[i] = originalIcon;
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-
-        //
 
         for (int i = 0; i < game_buttons.length; i++) {
             game_buttons[i] = new JButton();
             panel_buttons.add(game_buttons[i]);
             //bestämmer att alla knappar förutom den sista ska få en siffra
-            if (i!=game_buttons.length-1 && bilder[i] != null) {
-                game_buttons[i].setIcon(bilder[i]);
+            if (i!=game_buttons.length-1) {
+                game_buttons[i].setText(String.valueOf(i+1));
+                System.out.println("fixar");
             }
-            game_buttons[i].setName(String.valueOf(i+1));
             game_buttons[i].setFocusable(false);
             game_buttons[i].setFont(new Font("Times New Roman", Font.BOLD, 120));
             game_buttons[i].addActionListener(this);
         }
 
-
-
-        //lägger på options texten och knapparna på panel_options
-
-        //panel_options.add(option_buttons[0]);
 
         frame.add(panel_options, BorderLayout.NORTH);
         frame.add(panel_buttons);
@@ -93,21 +73,21 @@ public class GameWindow implements ActionListener {
             originalPoint[i]=game_buttons[i].getLocation();
         }
         this.originalPoint=originalPoint;
-
-
-
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
         int blankX = blankX(game_buttons[15]);
         int blankY = blankY(game_buttons[15]);
         JButton button = (JButton) e.getSource();
+        if(button.getText().equals("Hamster")) {
+            changeImage("hamster");
+        }
+        if(button.getText().equals("Siffror")) {
+            changeImage("siffror");
+        }
         if(button.getText().equals("Nytt spel")) {
             genereraNyttSpel(4);
-
         }
         else{
             int buttonX = buttonX(button);
@@ -128,6 +108,39 @@ public class GameWindow implements ActionListener {
     }
 
 
+    private void changeImage(String whichImage){
+        panel_buttons.revalidate();
+        panel_buttons.repaint();
+        if (whichImage.equals("hamster")) {
+            for (int i = 0; i < bilder.length; i++) {
+                String imagePath = "src/bilder/hamster/" + (i + 1) + ".png";
+                try {
+                    Icon originalIcon = new ImageIcon(imagePath);
+                    bilder[i] = originalIcon;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            for (int i = 0; i < game_buttons.length; i++) {
+
+                if (i != game_buttons.length - 1 && bilder[i] != null) {
+                    game_buttons[i].setIcon(bilder[i]);
+                    game_buttons[i].setText("");
+                }
+            }
+
+        }
+        if (whichImage.equals("siffror")) {
+            for (int i = 0; i < game_buttons.length; i++) {
+                if (i!=game_buttons.length-1 && bilder[i] != null) {
+                    game_buttons[i].setIcon(null);
+                    game_buttons[i].setText(String.valueOf(i+1));
+                }
+            }
+        }
+
+
+    }
 
     public int buttonY (JButton b){
         int currentY=b.getY();
@@ -152,6 +165,7 @@ public class GameWindow implements ActionListener {
     }
 
     public void genereraNyttSpel(int spelstorlek){
+
 
         Random slumpGen = new Random();
 
@@ -186,8 +200,6 @@ public class GameWindow implements ActionListener {
             if(!game_buttons[i].getLocation().equals(original[i])){
                 return false;
             }
-                //System.out.println("game button current: "+game_buttons[i].getLocation());
-                //System.out.println("game button original: "+originalPoint[i]);
         }
         return true;}
 
