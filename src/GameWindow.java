@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class GameWindow implements ActionListener {
@@ -21,7 +24,6 @@ public class GameWindow implements ActionListener {
         frame.getContentPane().setBackground(new Color(50, 50, 50));
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
-
 
         //fixar till bordern som syns högst upp, läggs på panel_options längre ner i koden
         label_textfield.setBackground(new Color(200, 200, 200));
@@ -43,20 +45,42 @@ public class GameWindow implements ActionListener {
 
         panel_buttons.setLayout(new GridLayout(4, 4));
         panel_buttons.setBackground(new Color(150, 150, 150));
+        //
 
 
+        /*
+        Icon[] bilder = new ImageIcon[15];
+        for (int i = 0; i < bilder.length; i++) {
+            String imagePath = "src/bilder/hamster/" + (i + 1) + ".png";
+            try {
+                Icon originalIcon = new ImageIcon(imagePath);
+                bilder[i] = originalIcon;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        */
+
+        //
+        String[] buttonNames = new String[game_buttons.length];
+/*
 
         for (int i = 0; i < game_buttons.length; i++) {
             game_buttons[i] = new JButton();
             panel_buttons.add(game_buttons[i]);
             //bestämmer att alla knappar förutom den sista ska få en siffra
-            if (i!=game_buttons.length-1) {
-                game_buttons[i].setText(String.valueOf(i+1));
+            if (i!=game_buttons.length-1 && bilder[i] != null) {
+                game_buttons[i].setIcon(bilder[i]);
+                // game_buttons[i].setText(String.valueOf(i+1));
             }
+            game_buttons[i].setName(String.valueOf(i+1));
             game_buttons[i].setFocusable(false);
             game_buttons[i].setFont(new Font("Times New Roman", Font.BOLD, 120));
             game_buttons[i].addActionListener(this);
+
         }
+
+ */
 
 
 
@@ -66,9 +90,12 @@ public class GameWindow implements ActionListener {
             panel_options.add(optionButton);
         }
 
-
         frame.add(panel_options, BorderLayout.NORTH);
         frame.add(panel_buttons);
+        panel_buttons.revalidate();
+        panel_buttons.repaint();
+        frame.revalidate();
+        frame.repaint();
 
 
 
@@ -161,10 +188,48 @@ public class GameWindow implements ActionListener {
     public int getPixelKordinatsFromX(int x){
         return game_buttons[15].getSize().width*x;
     }
+        int blankX=blankX(game_buttons[15]);
+        int blankY=blankY(game_buttons[15]);
+        JButton button=(JButton) e.getSource();
+        int buttonX=buttonX(button);
+        int buttonY=buttonY(button);
+        button.setLocation(blankX, blankY);
+        game_buttons[15].setLocation(buttonX,buttonY);
+    }
 
+    public boolean winChecker(){
+        for(int i=0;i<game_buttons.length;i++){
+            String buttonName = game_buttons[i].getName();
+
+            if (!buttonName.equals(String.valueOf(i + 1))) {
+                return false;
+            }
+        }
+        return true;
     public int getPixelKordinatsFromY(int y){
         return game_buttons[15].getSize().height*y;
     }
+
+
+    public int blankY (JButton b){
+        float currentY= b.getAlignmentY();
+
+        return (int) currentY;
+    }
+    public int blankX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
+    public int buttonY (JButton b){
+        int currentY=b.getY();
+        return currentY;
+    }
+    public int buttonX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
 
     public int geXKoordinatKnapp(JButton button){
         int xKordinat = (button.getX()/button.getSize().width);
