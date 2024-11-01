@@ -33,6 +33,7 @@ public class GameWindow implements ActionListener {
         for (int i = 0; i < option_buttons.length; i++) {
             option_buttons[i]=new JButton();
             option_buttons[i].setSize(25,15);
+            option_buttons[i].addActionListener(this);
         }
         option_buttons[0].setText("Option 1");
         option_buttons[1].setText("Option 2");
@@ -64,7 +65,12 @@ public class GameWindow implements ActionListener {
         frame.add(panel_options, BorderLayout.NORTH);
         frame.add(panel_buttons);
 
-        //genereraNyttSpel(4);
+        /*
+        genereraNyttSpel(4);
+        frame.revalidate();
+        frame.repaint();
+
+         */
 
         /*
 
@@ -83,20 +89,25 @@ public class GameWindow implements ActionListener {
 
     }
 
-    /*
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         int blankX = blankX(game_buttons[15]);
         int blankY = blankY(game_buttons[15]);
         JButton button = (JButton) e.getSource();
-        int buttonX = buttonX(button);
-        int buttonY = buttonY(button);
-        button.setLocation(blankX, blankY);
-        game_buttons[15].setLocation(buttonX,buttonY);
+        if(button.getText().equals("Option 1")) {
+            genereraNyttSpel(4);
+        }
+        else{
+            int buttonX = buttonX(button);
+            int buttonY = buttonY(button);
+            button.setLocation(blankX, blankY);
+            game_buttons[15].setLocation(buttonX,buttonY);
+        }
     }
 
-     */
+
 
     public int buttonY (JButton b){
         int currentY=b.getY();
@@ -140,15 +151,19 @@ public class GameWindow implements ActionListener {
                 if(!knappar.isEmpty()) {
 
                     int denUtvalda = slumpGen.nextInt(knappar.size());
+
+
                     System.out.println(knappar.size());     //grön
                     System.out.println(denUtvalda);         //grön
-
-                    System.out.println(getPixelKordinatsFromX(i));  // alltid 0
-                    System.out.println(game_buttons[15].getSize().width);
+                    System.out.println(game_buttons[0].getSize().width+"bred"); //??
+                    System.out.println(game_buttons[0].getSize().height+"höjd");
                     System.out.println(i);                          //ok
+                    System.out.println(getPixelKordinatsFromX(i)+"x kord");
                     System.out.println(j);                          //ok
+                    System.out.println(getPixelKordinatsFromX(j)+"y kord");
 
                     game_buttons[denUtvalda].setLocation(getPixelKordinatsFromX(i), getPixelKordinatsFromY(j));
+
                     knappar.remove(denUtvalda);
                 }
             }
@@ -160,16 +175,18 @@ public class GameWindow implements ActionListener {
     }
 
     public int getPixelKordinatsFromY(int y){
-        return game_buttons[15].getSize().width*y;
+        return game_buttons[15].getSize().height*y;
     }
 
 
 
-
+    /*
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
+
+     */
 
 
 
