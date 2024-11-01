@@ -107,8 +107,11 @@ public class GameWindow implements ActionListener {
         else{
             int buttonX = buttonX(button);
             int buttonY = buttonY(button);
-            button.setLocation(blankX, blankY);
-            game_buttons[15].setLocation(buttonX,buttonY);
+            if(arbrevidtom(button)) {        //kan kanske påverkas av layoten? räknar den pixlar från fönstret eller från panel
+
+                button.setLocation(blankX, blankY);
+                game_buttons[15].setLocation(buttonX, buttonY);
+            }
         }
     }
 
@@ -181,48 +184,6 @@ public class GameWindow implements ActionListener {
 
     public int getPixelKordinatsFromY(int y){
         return game_buttons[15].getSize().height*y;
-    }
-
-
-
-    /*
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        int blankX=blankX(game_buttons[15]);
-        int blankY=blankY(game_buttons[15]);
-        JButton button=(JButton) e.getSource();
-        int buttonX=buttonX(button);
-        int buttonY=buttonY(button);
-
-
-        //System.out.println(buttonX+" "+buttonY+" "+blankX+" "+blankY);
-        //System.out.println(game_buttons[15].getSize().width);
-        //System.out.println(buttonX/game_buttons[15].getSize().width);
-
-
-        if(arbrevidtom(button)){        //kan kanske påverkas av layoten? räknar den pixlar från fönstret eller från panel
-
-            button.setLocation(blankX, blankY);
-            game_buttons[15].setLocation(buttonX,buttonY);
-
-    }
-
-    public int blankY (JButton b){
-        int currentY=b.getY();
-        return currentY;
-    }
-    public int blankX (JButton b){
-        int currentX=b.getX();
-        return currentX;
-    }
-
-    public int buttonY (JButton b){
-        int currentY=b.getY();
-        return currentY;
-    }
-    public int buttonX (JButton b){
-        int currentX=b.getX();
-        return currentX;
     }
 
     public int geXKoordinatKnapp(JButton button){
