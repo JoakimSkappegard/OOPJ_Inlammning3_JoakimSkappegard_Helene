@@ -84,8 +84,20 @@ public class GameWindow implements ActionListener {
             changeImage("hamster");
         }
         if(button.getText().equals("Siffror")) {
-            changeImage("siffror");
+            panel_buttons.revalidate();
+            panel_buttons.repaint();
+            for (int i = 0; i < game_buttons.length; i++) {
+                if (i!=game_buttons.length-1 && bilder[i] != null) {
+                    game_buttons[i].setIcon(null);
+                    game_buttons[i].setText(String.valueOf(i+1));
+                }
+            }
         }
+        if(button.getText().equals("Groda")) {
+            changeImage("groda");
+        }
+
+        //denna måste vara längst ner i options event, annars buggar blank knappen
         if(button.getText().equals("Nytt spel")) {
             genereraNyttSpel(4);
         }
@@ -107,13 +119,19 @@ public class GameWindow implements ActionListener {
         }
     }
 
-
     private void changeImage(String whichImage){
         panel_buttons.revalidate();
         panel_buttons.repaint();
+
+        String pathName="";
         if (whichImage.equals("hamster")) {
+            pathName="src/bilder/hamster/";}
+        if (whichImage.equals("groda")) {
+            pathName="src/bilder/groda/";
+        }
+
             for (int i = 0; i < bilder.length; i++) {
-                String imagePath = "src/bilder/hamster/" + (i + 1) + ".png";
+                String imagePath = pathName + (i + 1) + ".png";
                 try {
                     Icon originalIcon = new ImageIcon(imagePath);
                     bilder[i] = originalIcon;
@@ -128,19 +146,11 @@ public class GameWindow implements ActionListener {
                     game_buttons[i].setText("");
                 }
             }
-
-        }
-        if (whichImage.equals("siffror")) {
-            for (int i = 0; i < game_buttons.length; i++) {
-                if (i!=game_buttons.length-1 && bilder[i] != null) {
-                    game_buttons[i].setIcon(null);
-                    game_buttons[i].setText(String.valueOf(i+1));
-                }
-            }
         }
 
 
-    }
+
+
 
     public int buttonY (JButton b){
         int currentY=b.getY();
