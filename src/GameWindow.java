@@ -13,6 +13,7 @@ public class GameWindow implements ActionListener {
     JButton[] game_buttons=new JButton[16];
     JButton[] option_buttons=new JButton[3];
 
+
     GameWindow() {
         int windowBounds=800;
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,8 +40,10 @@ public class GameWindow implements ActionListener {
         option_buttons[1].setText("Option 2");
         option_buttons[2].setText("Option 3");
 
+
         panel_buttons.setLayout(new GridLayout(4, 4));
         panel_buttons.setBackground(new Color(150, 150, 150));
+
 
 
         for (int i = 0; i < game_buttons.length; i++) {
@@ -54,6 +57,8 @@ public class GameWindow implements ActionListener {
             game_buttons[i].setFont(new Font("Times New Roman", Font.BOLD, 120));
             game_buttons[i].addActionListener(this);
         }
+
+
 
         //lägger på options texten och knapparna på panel_options
         panel_options.add(label_textfield);
@@ -183,11 +188,56 @@ public class GameWindow implements ActionListener {
     /*
     @Override
     public void actionPerformed(ActionEvent e) {
+        int blankX=blankX(game_buttons[15]);
+        int blankY=blankY(game_buttons[15]);
+        JButton button=(JButton) e.getSource();
+        int buttonX=buttonX(button);
+        int buttonY=buttonY(button);
+
+
+        //System.out.println(buttonX+" "+buttonY+" "+blankX+" "+blankY);
+        //System.out.println(game_buttons[15].getSize().width);
+        //System.out.println(buttonX/game_buttons[15].getSize().width);
+
+
+        if(arbrevidtom(button)){        //kan kanske påverkas av layoten? räknar den pixlar från fönstret eller från panel
+
+            button.setLocation(blankX, blankY);
+            game_buttons[15].setLocation(buttonX,buttonY);
 
     }
 
-     */
+    public int blankY (JButton b){
+        int currentY=b.getY();
+        return currentY;
+    }
+    public int blankX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
 
+    public int buttonY (JButton b){
+        int currentY=b.getY();
+        return currentY;
+    }
+    public int buttonX (JButton b){
+        int currentX=b.getX();
+        return currentX;
+    }
+
+    public int geXKoordinatKnapp(JButton button){
+        int xKordinat = (button.getX()/button.getSize().width);
+        return xKordinat;
+    }
+
+    public int geYKoordinatKnapp(JButton button){
+        int yKordinat = (button.getY()/button.getSize().height);
+        return yKordinat;
+    }
+
+    public boolean arbrevidtom(JButton button){
+        return ((geXKoordinatKnapp(button)==geXKoordinatKnapp(game_buttons[15]))&& (geYKoordinatKnapp(button)==(geYKoordinatKnapp(game_buttons[15])-1)||geYKoordinatKnapp(button)==(geYKoordinatKnapp(game_buttons[15])+1))) || (geYKoordinatKnapp(button)==(geYKoordinatKnapp(game_buttons[15])) && (geXKoordinatKnapp(button)==(geXKoordinatKnapp(game_buttons[15])-1)||geXKoordinatKnapp(button)==geXKoordinatKnapp(game_buttons[15])+1));
+    }
 
 
     public static void main(String[] args) {
