@@ -88,8 +88,7 @@ public class GameWindow implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int blankX = blankX(game_buttons[15]);
-        int blankY = blankY(game_buttons[15]);
+        Point blankLocation=game_buttons[15].getLocation();
         JButton button = (JButton) e.getSource();
         if(button.getText().equals("Hamster")) {
             changeImage("hamster");
@@ -107,12 +106,13 @@ public class GameWindow implements ActionListener {
             genereraNyttSpel(gameBoardSize);
         }
         else{
-            int buttonX = buttonX(button);
-            int buttonY = buttonY(button);
+            //int buttonX = buttonX(button);
+            //int buttonY = buttonY(button);
+            Point buttonLocation=button.getLocation();
             if(arbrevidtom(button)) {        //kan kanske påverkas av layoten? räknar den pixlar från fönstret eller från panel
 
-                button.setLocation(blankX, blankY);
-                game_buttons[15].setLocation(buttonX, buttonY);
+                button.setLocation(blankLocation);
+                game_buttons[game_buttons.length-1].setLocation(buttonLocation);
                 Boolean winChecked=winChecker();
                 if (winChecked){
                     JOptionPane.showMessageDialog(frame, "Vinnare!");
@@ -122,11 +122,11 @@ public class GameWindow implements ActionListener {
         }
     }
 
-    private void changeImage(String whichImage){
+    public void changeImage(String whichImage){
         panel_buttons.revalidate();
         panel_buttons.repaint();
 
-        //de enskilda ikonerna måste vara 150x150px
+        //de enskilda ikonerna bör vara 180x158px
         String pathName="";
         if (whichImage.equals("hamster")) {
             pathName="src/bilder/hamster/";}
@@ -160,15 +160,16 @@ public class GameWindow implements ActionListener {
         }
     }
 
-    public int buttonY (JButton b){
-        int currentY=b.getY();
-        return currentY;
-    }
-    public int buttonX (JButton b){
-        int currentX=b.getX();
-        return currentX;
-    }
+    //public int buttonY (JButton b){
+      //  int currentY=b.getY();
+      //  return currentY;
+    //}
+   // public int buttonX (JButton b){
+     //   int currentX=b.getX();
+    //    return currentX;
+    //}
 
+    /*
     public int blankY (JButton b){
         int currentY=b.getY();
         return currentY;
@@ -178,9 +179,9 @@ public class GameWindow implements ActionListener {
         return currentX;
     }
 
-    public JButton getGame_button(int i) {
+    /*public JButton getGame_button(int i) {
         return game_buttons[i];
-    }
+    }*/
 
     public void genereraNyttSpel(int spelstorlek){
 
@@ -211,7 +212,6 @@ public class GameWindow implements ActionListener {
         return game_buttons[15].getSize().width*x;
     }
 
-
     public boolean winChecker(){
         for(int i=0;i<game_buttons.length;i++){
             if(!game_buttons[i].getLocation().equals(this.originalPoint[i])){
@@ -223,8 +223,6 @@ public class GameWindow implements ActionListener {
     public int getPixelKordinatsFromY(int y){
         return game_buttons[15].getSize().height*y;
     }
-
-
 
     public int geXKoordinatKnapp(JButton button){
         int xKordinat = (button.getX()/button.getSize().width);
