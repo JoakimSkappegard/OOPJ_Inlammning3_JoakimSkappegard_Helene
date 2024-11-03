@@ -78,8 +78,6 @@ public class GameWindow implements ActionListener {
             originalPoint[i]=game_buttons[i].getLocation();
         }
         this.originalPoint=originalPoint;
-        System.out.println(game_buttons[0].getWidth());
-        System.out.println(game_buttons[1].getHeight());
     }
 
     @Override
