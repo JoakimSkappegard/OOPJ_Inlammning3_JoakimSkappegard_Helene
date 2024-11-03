@@ -152,6 +152,7 @@ public class GameWindow implements ActionListener {
         }
     }
 
+
     public void genereraNyttSpel(int spelstorlek){
         Random slumpGen = new Random();
 
