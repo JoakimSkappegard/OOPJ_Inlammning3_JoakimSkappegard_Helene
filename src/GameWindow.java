@@ -67,10 +67,6 @@ public class GameWindow implements ActionListener {
             game_buttons[i].addActionListener(this);
         }
 
-
-
-
-
         frame.add(panel_options, BorderLayout.NORTH);
         frame.add(panel_buttons);
         panel_buttons.revalidate();
@@ -106,8 +102,6 @@ public class GameWindow implements ActionListener {
             genereraNyttSpel(gameBoardSize);
         }
         else{
-            //int buttonX = buttonX(button);
-            //int buttonY = buttonY(button);
             Point buttonLocation=button.getLocation();
             if(arbrevidtom(button)) {        //kan kanske påverkas av layoten? räknar den pixlar från fönstret eller från panel
 
@@ -160,32 +154,7 @@ public class GameWindow implements ActionListener {
         }
     }
 
-    //public int buttonY (JButton b){
-      //  int currentY=b.getY();
-      //  return currentY;
-    //}
-   // public int buttonX (JButton b){
-     //   int currentX=b.getX();
-    //    return currentX;
-    //}
-
-    /*
-    public int blankY (JButton b){
-        int currentY=b.getY();
-        return currentY;
-    }
-    public int blankX (JButton b){
-        int currentX=b.getX();
-        return currentX;
-    }
-
-    /*public JButton getGame_button(int i) {
-        return game_buttons[i];
-    }*/
-
     public void genereraNyttSpel(int spelstorlek){
-
-
         Random slumpGen = new Random();
 
         ArrayList<JButton> knappar= new ArrayList();
@@ -205,7 +174,6 @@ public class GameWindow implements ActionListener {
                 }
             }
         }
-
     }
 
     public int getPixelKordinatsFromX(int x){
@@ -218,7 +186,8 @@ public class GameWindow implements ActionListener {
                 return false;
             }
         }
-        return true;}
+        return true;
+    }
 
     public int getPixelKordinatsFromY(int y){
         return game_buttons[15].getSize().height*y;
@@ -237,7 +206,6 @@ public class GameWindow implements ActionListener {
     public boolean arbrevidtom(JButton button){
         return ((geXKoordinatKnapp(button)==geXKoordinatKnapp(game_buttons[15]))&& (geYKoordinatKnapp(button)==(geYKoordinatKnapp(game_buttons[15])-1)||geYKoordinatKnapp(button)==(geYKoordinatKnapp(game_buttons[15])+1))) || (geYKoordinatKnapp(button)==(geYKoordinatKnapp(game_buttons[15])) && (geXKoordinatKnapp(button)==(geXKoordinatKnapp(game_buttons[15])-1)||geXKoordinatKnapp(button)==geXKoordinatKnapp(game_buttons[15])+1));
     }
-
 
     public static void main(String[] args) {
         GameWindow window=new GameWindow();
