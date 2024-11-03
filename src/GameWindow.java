@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,11 +13,13 @@ public class GameWindow implements ActionListener {
     JLabel label_textfield=new JLabel();
     JButton[] game_buttons=new JButton[16];
     JButton[] option_buttons=new JButton[4];
-    Point[] originalPoint=new Point[game_buttons.length];
+    Point[] originalPoint=new Point[game_buttons.length-1];
     private Icon[] bilder=new Icon[game_buttons.length-1];
+    private int gameBoardSize=4;
+    int windowBounds=800;
 
     GameWindow() {
-        int windowBounds=800;
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(windowBounds, windowBounds);
         frame.getContentPane().setBackground(new Color(50, 50, 50));
@@ -45,7 +48,7 @@ public class GameWindow implements ActionListener {
         option_buttons[3].setText("Groda");
 
 
-        panel_buttons.setLayout(new GridLayout(4, 4));
+        panel_buttons.setLayout(new GridLayout(gameBoardSize, gameBoardSize));
         panel_buttons.setBackground(new Color(150, 150, 150));
 
         for (int i = 0; i < game_buttons.length; i++) {
@@ -54,12 +57,18 @@ public class GameWindow implements ActionListener {
             //bestämmer att alla knappar förutom den sista ska få en siffra
             if (i!=game_buttons.length-1) {
                 game_buttons[i].setText(String.valueOf(i+1));
-                System.out.println("fixar");
+            }
+            else{
+                game_buttons[i].setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+                game_buttons[i].setBackground(new Color(225, 225, 235));
             }
             game_buttons[i].setFocusable(false);
             game_buttons[i].setFont(new Font("Times New Roman", Font.BOLD, 120));
             game_buttons[i].addActionListener(this);
         }
+
+
+
 
 
         frame.add(panel_options, BorderLayout.NORTH);
@@ -73,6 +82,8 @@ public class GameWindow implements ActionListener {
             originalPoint[i]=game_buttons[i].getLocation();
         }
         this.originalPoint=originalPoint;
+        System.out.println(game_buttons[0].getWidth());
+        System.out.println(game_buttons[1].getHeight());
     }
 
     @Override
@@ -84,14 +95,8 @@ public class GameWindow implements ActionListener {
             changeImage("hamster");
         }
         if(button.getText().equals("Siffror")) {
-            panel_buttons.revalidate();
-            panel_buttons.repaint();
-            for (int i = 0; i < game_buttons.length; i++) {
-                if (i!=game_buttons.length-1 && bilder[i] != null) {
-                    game_buttons[i].setIcon(null);
-                    game_buttons[i].setText(String.valueOf(i+1));
-                }
-            }
+            changeImage("siffror");
+
         }
         if(button.getText().equals("Groda")) {
             changeImage("groda");
@@ -99,7 +104,7 @@ public class GameWindow implements ActionListener {
 
         //denna måste vara längst ner i options event, annars buggar blank knappen
         if(button.getText().equals("Nytt spel")) {
-            genereraNyttSpel(4);
+            genereraNyttSpel(gameBoardSize);
         }
         else{
             int buttonX = buttonX(button);
@@ -108,13 +113,11 @@ public class GameWindow implements ActionListener {
 
                 button.setLocation(blankX, blankY);
                 game_buttons[15].setLocation(buttonX, buttonY);
-                Boolean winChecked=winChecker(originalPoint);
+                Boolean winChecked=winChecker();
                 if (winChecked){
-                    System.out.println("grattis");
+                    JOptionPane.showMessageDialog(frame, "Vinnare!");
                 }
-                else{
-                    System.out.println("inte än");
-                }
+
             }
         }
     }
@@ -123,13 +126,14 @@ public class GameWindow implements ActionListener {
         panel_buttons.revalidate();
         panel_buttons.repaint();
 
+        //de enskilda ikonerna måste vara 150x150px
         String pathName="";
         if (whichImage.equals("hamster")) {
             pathName="src/bilder/hamster/";}
         if (whichImage.equals("groda")) {
             pathName="src/bilder/groda/";
         }
-
+        if (!whichImage.equals("Siffror")) {
             for (int i = 0; i < bilder.length; i++) {
                 String imagePath = pathName + (i + 1) + ".png";
                 try {
@@ -140,17 +144,21 @@ public class GameWindow implements ActionListener {
                 }
             }
             for (int i = 0; i < game_buttons.length; i++) {
-
                 if (i != game_buttons.length - 1 && bilder[i] != null) {
                     game_buttons[i].setIcon(bilder[i]);
                     game_buttons[i].setText("");
                 }
             }
         }
-
-
-
-
+        if (whichImage.equals("siffror")) {
+            for (int i = 0; i < game_buttons.length; i++) {
+                if (i!=game_buttons.length-1 && bilder[i] != null) {
+                    game_buttons[i].setIcon(null);
+                    game_buttons[i].setText(String.valueOf(i+1));
+                }
+            }
+        }
+    }
 
     public int buttonY (JButton b){
         int currentY=b.getY();
@@ -204,10 +212,9 @@ public class GameWindow implements ActionListener {
     }
 
 
-    public boolean winChecker(Point[] original){
-
+    public boolean winChecker(){
         for(int i=0;i<game_buttons.length;i++){
-            if(!game_buttons[i].getLocation().equals(original[i])){
+            if(!game_buttons[i].getLocation().equals(this.originalPoint[i])){
                 return false;
             }
         }
